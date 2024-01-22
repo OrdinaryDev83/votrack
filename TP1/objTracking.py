@@ -16,7 +16,7 @@ kf = KalmanFitler(
 
 cap = cv2.VideoCapture("randomball.avi")
 
-frame_rate = 12222
+frame_rate = 5
 prev = 0
 
 trajectory = DefaultDict(list)
@@ -53,7 +53,7 @@ def preprocess():
                 if trajectory[i][j-1] is None or trajectory[i][j] is None:
                     continue
                 # thickness is velocity
-                scale = 0.4
+                scale = 0.2
                 thickness = max(min(int(np.sqrt(k_v_x ** 2 + k_v_y ** 2) * scale), 15), 1)
                 to_show = cv2.line(to_show, trajectory[i][j-1], trajectory[i][j], (0, 255, 255), thickness)
     else:
