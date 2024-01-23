@@ -1,5 +1,6 @@
 import numpy as np
 
+
 # compute the Jaccard index between two bounding boxes
 def jaccard_index(a, b):
     a_left, a_top, a_width, a_height = a

@@ -2,6 +2,7 @@ import numpy as np
 
 sigma_iou = 0.7
 
+
 def associate_detections_to_tracks(jaccard_index_frames):
     tracks = {}
     jaccard_values = {}

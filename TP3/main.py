@@ -4,6 +4,7 @@ from jaccard_index import jaccard_index_frames
 from detection_association import associate_detections_to_tracks
 from track_management import track_management
 from draw_and_display import draw_frames, show_video
+from save_csv import save_tracking_results
 import pandas as pd
 
 det = pd.read_csv("../Data/det/det.txt", sep=",", header=None)
@@ -17,11 +18,21 @@ gt_frames, _ = preprocess_frames(gt)
 det_jaccard_index_frames = jaccard_index_frames(det_frames)
 gt_jaccard_index_frames = jaccard_index_frames(gt_frames)
 
-det_tracks, det_jaccard_values = associate_detections_to_tracks(det_jaccard_index_frames)
+det_tracks, det_jaccard_values = associate_detections_to_tracks(
+    det_jaccard_index_frames
+)
 gt_tracks, gt_jaccard_values = associate_detections_to_tracks(gt_jaccard_index_frames)
 
 det_bboxes_for_each_frame = track_management(det_tracks, det_jaccard_values)
 gt_bboxes_for_each_frame = track_management(gt_tracks, gt_jaccard_values)
+
+save_tracking_results(
+    det_bboxes_for_each_frame, det_frames, "det_output_tracking_results.txt"
+)
+save_tracking_results(
+    gt_bboxes_for_each_frame, gt_frames, "gt_output_tracking_results.txt"
+)
+
 
 det_frame_imgs = draw_frames(og_len, det_bboxes_for_each_frame, det_frames)
 gt_frame_imgs = draw_frames(og_len, gt_bboxes_for_each_frame, gt_frames)

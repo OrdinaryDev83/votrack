@@ -1,22 +1,32 @@
-import numpy as np
+from scipy.optimize import linear_sum_assignment
 
-sigma_iou = 0.7
 
-def associate_detections_to_tracks(jaccard_index_frames):
+def associate_detections_to_tracks(jaccard_index_frames, sigma_iou=0.7):
     tracks = {}
     jaccard_values = {}
+
     for frame in jaccard_index_frames.keys():
-        tracks[frame] = []
-        jaccard_values[frame] = []
-        for jaccard_index_frame in jaccard_index_frames[frame]:
-            if len(jaccard_index_frame) == 0:
-                tracks[frame].append(-1)
-                continue
-            max_index = np.argmax(jaccard_index_frame)
-            if jaccard_index_frame[max_index] >= sigma_iou:
-                tracks[frame].append(max_index)
-                jaccard_values[frame].append(jaccard_index_frame[max_index])
-            else:
-                tracks[frame].append(-1)
-                jaccard_values[frame].append(-1)
+        # Convert IoU to cost matrix (1 - IoU)
+        cost_matrix = 1 - jaccard_index_frames[frame]
+
+        # Apply Hungarian algorithm
+        row_ind, col_ind = linear_sum_assignment(cost_matrix)
+
+        # Filter out assignments with a cost higher than the threshold (i.e., IoU lower than sigma_iou)
+        matched_indices = [
+            (r, c)
+            for r, c in zip(row_ind, col_ind)
+            if cost_matrix[r, c] <= (1 - sigma_iou)
+        ]
+
+        # Extract matches and their IoU values
+        matches = [c for r, c in matched_indices]
+        iou_values = [jaccard_index_frames[frame][r, c] for r, c in matched_indices]
+
+        # Update tracks and jaccard values dictionaries
+        tracks[frame] = matches
+        jaccard_values[frame] = iou_values
+
+        # Handle unmatched detections and tracks as required
+
     return tracks, jaccard_values

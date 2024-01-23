@@ -4,6 +4,7 @@ from drawing_functions import draw_bboxes, draw_ids, draw_trajectories
 
 trajectory_motion_backtrack = 3
 
+
 def draw_frames(og_len, bboxes_for_each_frame, frames):
     frame_ids = list(bboxes_for_each_frame.keys())
 
@@ -59,7 +60,7 @@ def draw_frames(og_len, bboxes_for_each_frame, frames):
                 centroids[previous_frame_index],
                 matches,
                 (255, 255, 255),
-                trajectory_motion_backtrack
+                trajectory_motion_backtrack,
             )
 
         frame_imgs.append(img)

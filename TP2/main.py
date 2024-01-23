@@ -17,7 +17,9 @@ gt_frames, _ = preprocess_frames(gt)
 det_jaccard_index_frames = jaccard_index_frames(det_frames)
 gt_jaccard_index_frames = jaccard_index_frames(gt_frames)
 
-det_tracks, det_jaccard_values = associate_detections_to_tracks(det_jaccard_index_frames)
+det_tracks, det_jaccard_values = associate_detections_to_tracks(
+    det_jaccard_index_frames
+)
 gt_tracks, gt_jaccard_values = associate_detections_to_tracks(gt_jaccard_index_frames)
 
 det_bboxes_for_each_frame = track_management(det_tracks, det_jaccard_values)

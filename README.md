@@ -3,6 +3,16 @@ TP1 :
 - `cd TP1`
 - `python3 objTracking.py`
 
-TP2 TP3 TP4 TP5 :
+TP2 :
 - `cd TP2`
+- `python3 main.py`
+In this part I first researched using a notebook then optimized the algorithms for execution in different files.
+
+TP3 :
+- `cd TP3`
+- `python3 main.py`
+In this part I modified `detection_association.py` to add the Hungarian algorithm.
+
+TP4 :
+- `cd TP4`
 - `python3 main.py`

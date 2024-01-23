@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def track_management(tracks, jaccard_values):
     bboxes_for_each_frame = {}
     frame_indices = list(tracks.keys())

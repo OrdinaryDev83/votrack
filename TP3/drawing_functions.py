@@ -1,5 +1,6 @@
 import cv2
 
+
 def draw_bboxes(frame, bboxes, color):
     for bbox in bboxes:
         x, y, w, h = bbox.astype(int)
@@ -22,7 +23,10 @@ def draw_ids(frame, bboxes, jaccard_dict, ids, color):
                 2,
             )
 
-def draw_trajectories(frame, centroids, previous_centroids, ids, color, trajectory_motion_backtrack):
+
+def draw_trajectories(
+    frame, centroids, previous_centroids, ids, color, trajectory_motion_backtrack
+):
     for centroid, id in zip(centroids, ids):
         # draw line between previous centroid and current centroid
         if id > len(previous_centroids) - trajectory_motion_backtrack:
