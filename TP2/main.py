@@ -3,8 +3,8 @@ import pandas as pd
 import cv2
 from tqdm import tqdm
 
-det = pd.read_csv("det/det.txt", sep=",", header=None)
-gt = pd.read_csv("gt/gt.txt", sep=",", header=None)
+det = pd.read_csv("../Data/det/det.txt", sep=",", header=None)
+gt = pd.read_csv("../Data/gt/gt.txt", sep=",", header=None)
 
 
 def preprocess_frames(df):
@@ -207,7 +207,7 @@ def draw_frames(og_len, bboxes_for_each_frame, frames):
     frame_imgs = []
     frame_index = 0
     for frame in tqdm(range(1, og_len + 1)):
-        img = cv2.imread(f"img1/{frame:06d}.jpg")
+        img = cv2.imread(f"../Data/img1/{frame:06d}.jpg")
         if frame not in frame_ids:
             frame_imgs.append(img)
             continue
