@@ -3,7 +3,7 @@ from preprocess_data import preprocess_frames
 from jaccard_index import jaccard_index_frames
 from detection_association import associate_detections_to_tracks
 from track_management import track_management
-from draw_and_display import draw_frames, show_video
+from draw_and_display import draw_frames, show_video, load_images
 from save_csv import save_tracking_results
 import pandas as pd
 
@@ -33,9 +33,10 @@ save_tracking_results(
     gt_bboxes_for_each_frame, gt_frames, "gt_output_tracking_results.txt"
 )
 
+images = load_images(og_len)
 
-det_frame_imgs = draw_frames(og_len, det_bboxes_for_each_frame, det_frames)
-gt_frame_imgs = draw_frames(og_len, gt_bboxes_for_each_frame, gt_frames)
+det_frame_imgs = draw_frames(og_len, images, det_bboxes_for_each_frame, det_frames)
+gt_frame_imgs = draw_frames(og_len, images, gt_bboxes_for_each_frame, gt_frames)
 
 show_video(det_frame_imgs)
 show_video(gt_frame_imgs)

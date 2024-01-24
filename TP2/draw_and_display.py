@@ -4,15 +4,20 @@ from drawing_functions import draw_bboxes, draw_ids, draw_trajectories
 
 trajectory_motion_backtrack = 3
 
+def load_images(og_len):
+    l = []
+    for frame in tqdm(range(1, og_len + 1)):
+        l.append(cv2.imread(f"../Data/img1/{frame:06d}.jpg"))
+    return l
 
-def draw_frames(og_len, bboxes_for_each_frame, frames):
+def draw_frames(og_len, images, bboxes_for_each_frame, frames):
     frame_ids = list(bboxes_for_each_frame.keys())
 
     centroids = {}
     frame_imgs = []
     frame_index = 0
-    for frame in tqdm(range(1, og_len + 1)):
-        img = cv2.imread(f"../Data/img1/{frame:06d}.jpg")
+    for frame in tqdm(range(og_len)):
+        img = images[frame]
         if frame not in frame_ids:
             frame_imgs.append(img)
             continue

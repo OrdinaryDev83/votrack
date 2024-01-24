@@ -19,7 +19,7 @@ def preprocess_frames(df):
 
     og_len = df["frame"].max()
 
-    conf_threshold = 30.0
+    conf_threshold = 80.0
     if df["conf"].unique()[0] != 1:
         df = df[df.conf >= conf_threshold]
 
