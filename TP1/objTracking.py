@@ -16,10 +16,10 @@ kf = KalmanFitler(
 
 cap = cv2.VideoCapture("randomball.avi")
 
-frame_rate = 5
+frame_rate = 30
 prev = 0
 
-trajectory = DefaultDict(list)
+trajectory = []
 
 def preprocess():
     ret, frame = cap.read()
@@ -32,30 +32,34 @@ def preprocess():
 
     detected = detect(frame)
     if detected:
-        for i, center in enumerate(detected):
+        for center in detected:
             x, y = center
-            # red rectangle as the estimated object position
-            # green circle for detected object
-            # blue rectangle as the predicted object position
-            # trajectory
+            # draw green circle around the detected object
             to_show = cv2.circle(to_show, (int(x), int(y)), 15, (0, 255, 0), 2)
-            p = kf.predict()
-            k_x, k_y = int(p[0]), int(p[1])
-            k_v_x, k_v_y = int(p[2]), int(p[3])
-            to_show = cv2.rectangle(to_show, (int(k_x-15), int(k_y-15)), (int(k_x+15), int(k_y+15)), (0, 0, 255), 2)
-            p_2 = kf.update(center)
-            k_x_2, k_y_2 = int(p_2[0]), int(p_2[1])
-            to_show = cv2.rectangle(to_show, (int(k_x_2-15), int(k_y_2-15)), (int(k_x_2+15), int(k_y_2+15)), (255, 0, 0), 2)
-            trajectory[i].append((k_x, k_y))
-            if len(trajectory[i]) > 4:
-                trajectory[i].pop(0)
-            for j in range(1, len(trajectory[i])):
-                if trajectory[i][j-1] is None or trajectory[i][j] is None:
+            # Update the Kalman Filter with the current detection
+            updated_state = kf.update(np.array([x, y]))
+            updated_x, updated_y = int(updated_state[0]), int(updated_state[1])
+
+            # Draw the updated position as a red rectangle
+            to_show = cv2.rectangle(to_show, (int(updated_x-15), int(updated_y-15)), (int(updated_x+15), int(updated_y+15)), (0, 0, 255), 2)
+
+            # Predict the next position
+            predicted_centroid = kf.predict()
+            predicted_x, predicted_y = int(predicted_centroid[0]), int(predicted_centroid[1])
+
+            # Draw the predicted position as a blue rectangle
+            to_show = cv2.rectangle(to_show, (int(predicted_x-15), int(predicted_y-15)), (int(predicted_x+15), int(predicted_y+15)), (255, 0, 0), 2)
+
+            # Update the trajectory with the updated position
+            trajectory.append((updated_x, updated_y))
+            if len(trajectory) > 4:
+                trajectory.pop(0)
+
+            # Draw the trajectory
+            for j in range(1, len(trajectory)):
+                if trajectory[j-1] is None or trajectory[j] is None:
                     continue
-                # thickness is velocity
-                scale = 0.2
-                thickness = max(min(int(np.sqrt(k_v_x ** 2 + k_v_y ** 2) * scale), 15), 1)
-                to_show = cv2.line(to_show, trajectory[i][j-1], trajectory[i][j], (0, 255, 255), thickness)
+                to_show = cv2.line(to_show, trajectory[j-1], trajectory[j], (0, 255, 255), 5)  # thickness is set to 5
     else:
         print("No detected")
     cv2.imshow("window", to_show)
