@@ -51,6 +51,14 @@ def track_management(frames, tracks, jaccard_values):
                 x_sdt_meas=0.1,
                 y_sdt_meas=0.1,
             )
+            kalman_filters[new_matches].x = np.array(
+                [
+                    [frames[frame][new_matches][0]],
+                    [frames[frame][new_matches][1]],
+                    [0],
+                    [0],
+                ]
+            )
 
         for match in matches:
             if match not in kalman_filters:
