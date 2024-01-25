@@ -47,9 +47,9 @@ def track_management(frames, tracks, jaccard_values):
                 dt=1,
                 u_x=0,
                 u_y=0,
-                std_acc=0.1,
-                x_sdt_meas=0.1,
-                y_sdt_meas=0.1,
+                std_acc=0.5,
+                x_sdt_meas=0.5,
+                y_sdt_meas=0.5,
             )
             kalman_filters[new_matches].x = np.array(
                 [

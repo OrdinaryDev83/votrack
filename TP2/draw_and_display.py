@@ -24,6 +24,7 @@ def draw_frames(og_len, images_, bboxes_for_each_frame, frames):
             frame_imgs.append(img)
             continue
         frame_index += 1
+        ids = bboxes_for_each_frame[frame]["ids"]
         matches = bboxes_for_each_frame[frame]["matches"]
         unmatched_detections = bboxes_for_each_frame[frame]["unmatched_detections"]
         unmatched_tracks = bboxes_for_each_frame[frame]["unmatched_tracks"]
@@ -45,11 +46,12 @@ def draw_frames(og_len, images_, bboxes_for_each_frame, frames):
             centroids[frame].append((bb[0] + bb[2] // 2, bb[1] + bb[3] // 2))
 
         draw_bboxes(img, bbox_matches, (255, 255, 255))
-        draw_ids(img, bbox_matches, jaccard_values, matches, (255, 255, 255))
+        draw_ids(img, ids, bbox_matches, jaccard_values, matches, (255, 255, 255))
 
         draw_bboxes(img, bbox_unmatched_detections, (0, 255, 0))
         draw_ids(
             img,
+            ids,
             bbox_unmatched_detections,
             jaccard_values,
             unmatched_detections,
@@ -57,7 +59,7 @@ def draw_frames(og_len, images_, bboxes_for_each_frame, frames):
         )
 
         draw_bboxes(img, bbox_unmatched_tracks, (0, 0, 255))
-        draw_ids(img, bbox_unmatched_tracks, None, unmatched_tracks, (0, 0, 255))
+        draw_ids(img, ids, bbox_unmatched_tracks, None, unmatched_tracks, (0, 0, 255))
 
         if frame_index > frame_ids[trajectory_motion_backtrack]:
             previous_frame_index = frame_ids[frame_index - trajectory_motion_backtrack]

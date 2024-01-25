@@ -7,10 +7,11 @@ def draw_bboxes(frame, bboxes, color):
         cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
 
 
-def draw_ids(frame, bboxes, jaccard_dict, ids, color):
-    for bbox, id in zip(bboxes, ids):
+def draw_ids(frame, ids, bboxes, jaccard_dict, matches, color):
+    for bbox, id in zip(bboxes, matches):
         x, y, w, h = bbox.astype(int)
-        cv2.putText(frame, str(id), (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 2, color, 2)
+        if id in ids:
+            cv2.putText(frame, str(ids[id]), (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 2, color, 2)
         if jaccard_dict is not None:
             jac = jaccard_dict[id]
             cv2.putText(

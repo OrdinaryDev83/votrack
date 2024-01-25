@@ -3,6 +3,7 @@ import torchvision.transforms as transforms
 from torchvision.models import resnet18, ResNet18_Weights
 from PIL import Image
 import numpy as np
+from tqdm import tqdm
 
 def load_model_and_transform():
     # Check if GPU is available
@@ -34,3 +35,29 @@ def extract_embeddings(model, transform, images, device):
 
     embeddings = torch.cat(embeddings, dim=0)
     return embeddings
+
+# Load the YOLOv5 model
+def load_yolo():
+    return torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
+
+def detect_pedestrians(model, image):
+    results = model(image)
+    pedestrians = results.pred[0]
+    
+    # Filter for pedestrians (class 0 in COCO dataset)
+    pedestrians = [det for det in pedestrians if int(det[-1]) == 0]
+    return pedestrians
+
+def process_frames(model, frame_list):
+    with open("../Data/det_yolo.txt", "w") as file:
+        # file.write("frame,id,bb_left,bb_top,bb_width,bb_height,conf,x,y,z\n")
+
+        for frame_num, frame in tqdm(enumerate(frame_list)):
+            detections = detect_pedestrians(model, frame)
+
+            for det in detections:
+                x1, y1, x2, y2, conf, _ = det[:6]
+                bb_width, bb_height = x2 - x1, y2 - y1
+                x1, y1, bb_width, bb_height = int(x1), int(y1), int(bb_width), int(bb_height)
+                conf = round(float(conf * 100.0), 3)
+                file.write(f"{frame_num + 1},-1,{x1},{y1},{bb_width},{bb_height},{conf},-1,-1,-1\n")

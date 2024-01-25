@@ -1,7 +1,7 @@
 from scipy.optimize import linear_sum_assignment
 
 
-def associate_detections_to_tracks(jaccard_index_frames, sigma_iou=0.7):
+def associate_detections_to_tracks(jaccard_index_frames, sigma_iou=0.3):
     tracks = {}
     jaccard_values = {}
 
@@ -21,7 +21,7 @@ def associate_detections_to_tracks(jaccard_index_frames, sigma_iou=0.7):
 
         # Extract matches and their IoU values
         matches = [c for r, c in matched_indices]
-        iou_values = [jaccard_index_frames[frame][r, c] for r, c in matched_indices]
+        iou_values = [[frame][r, c] for r, c in matched_indices]
 
         # Update tracks and jaccard values dictionaries
         tracks[frame] = matches

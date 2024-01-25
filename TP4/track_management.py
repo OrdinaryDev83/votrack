@@ -44,12 +44,12 @@ def track_management(frames, tracks, jaccard_values):
 
         for new_matches in unmatched_detections:
             kalman_filters[new_matches] = KalmanFilter(
-                dt=1,
+                dt=2,
                 u_x=0,
                 u_y=0,
-                std_acc=0.1,
-                x_sdt_meas=0.1,
-                y_sdt_meas=0.1,
+                std_acc=0.5,
+                x_sdt_meas=0.5,
+                y_sdt_meas=0.5,
             )
             kalman_filters[new_matches].x = np.array(
                 [
