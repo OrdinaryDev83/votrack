@@ -1,6 +1,7 @@
 import cv2
 from tqdm import tqdm
 from drawing_functions import draw_bboxes, draw_ids, draw_trajectories
+import copy
 
 trajectory_motion_backtrack = 3
 
@@ -10,7 +11,8 @@ def load_images(og_len):
         l.append(cv2.imread(f"../Data/img1/{frame:06d}.jpg"))
     return l
 
-def draw_frames(og_len, images, bboxes_for_each_frame, frames):
+def draw_frames(og_len, images_, bboxes_for_each_frame, frames):
+    images = copy.deepcopy(images_)
     frame_ids = list(bboxes_for_each_frame.keys())
 
     centroids = {}
