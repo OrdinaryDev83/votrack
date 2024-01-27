@@ -3,6 +3,18 @@ from kalman_filter import KalmanFilter
 
 
 def track_management(frames, tracks, jaccard_values):
+    """
+    Perform track management by updating the positions of objects in each frame based on the previous frames.
+
+    Args:
+        frames (dict): A dictionary containing the positions of objects in each frame.
+        tracks (dict): A dictionary containing the tracks of objects in each frame.
+        jaccard_values (dict): A dictionary containing the Jaccard similarity values for each object in each frame.
+
+    Returns:
+        dict: A dictionary containing the updated positions of objects in each frame, along with other information.
+
+    """
     bboxes_for_each_frame = {}
     frame_indices = list(tracks.keys())
     kalman_filters = {}

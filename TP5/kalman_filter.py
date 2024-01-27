@@ -2,6 +2,18 @@ import numpy as np
 
 
 class KalmanFilter:
+    """
+    KalmanFilter class implements a Kalman filter for state estimation.
+
+    Args:
+        dt (float): Time step between measurements.
+        u_x (float): Control input in the x-direction.
+        u_y (float): Control input in the y-direction.
+        std_acc (float): Standard deviation of the acceleration noise.
+        x_sdt_meas (float): Standard deviation of the x-direction measurement noise.
+        y_sdt_meas (float): Standard deviation of the y-direction measurement noise.
+    """
+
     def __init__(self, dt, u_x, u_y, std_acc, x_sdt_meas, y_sdt_meas) -> None:
         self.dt = dt
         self.u = np.array([[u_x], [u_y]])
@@ -33,11 +45,26 @@ class KalmanFilter:
         self.P = np.identity(self.A.shape[1])
 
     def predict(self):
+        """
+        Predicts the next state based on the current state and control input.
+
+        Returns:
+            numpy.ndarray: Predicted state.
+        """
         self.x = self.A @ self.x + self.B @ self.u
         self.P = self.A @ self.P @ self.A.T + self.Q
         return self.x
 
     def update(self, Z):
+        """
+        Updates the state estimate based on the measurement.
+
+        Args:
+            Z (numpy.ndarray): Measurement vector.
+
+        Returns:
+            numpy.ndarray: Updated state estimate.
+        """
         S = self.H @ self.P @ self.H.T + self.R
         K = self.P @ self.H.T @ np.linalg.inv(S)
         self.x = self.x + K @ (Z - self.H @ self.x)

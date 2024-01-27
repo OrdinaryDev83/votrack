@@ -7,6 +7,14 @@ from tqdm import tqdm
 
 
 def load_model_and_transform():
+    """
+    Loads a pre-trained ResNet model and defines a transformation to apply on images.
+
+    Returns:
+        model (torch.nn.Module): The pre-trained ResNet model.
+        transform (torchvision.transforms.Compose): The transformation to apply on images.
+        device (torch.device): The device (CPU or GPU) on which the model will be loaded.
+    """
     # Check if GPU is available
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -26,7 +34,18 @@ def load_model_and_transform():
 
 
 def extract_embeddings(model, transform, images, device):
-    # Process images and extract embeddings
+    """
+    Extracts embeddings from a given model for a list of images.
+
+    Args:
+        model (torch.nn.Module): The model used for extracting embeddings.
+        transform (torchvision.transforms.Transform): The transformation applied to the images.
+        images (List[Union[np.ndarray, PIL.Image.Image]]): The list of images to process.
+        device (torch.device): The device to run the model on.
+
+    Returns:
+        torch.Tensor: The extracted embeddings as a tensor.
+    """
     embeddings = []
 
     with torch.no_grad():
@@ -43,10 +62,27 @@ def extract_embeddings(model, transform, images, device):
 
 # Load the YOLOv5 model
 def load_yolo():
+    """
+    Loads the YOLOv5 model from the ultralytics/yolov5 repository.
+
+    Returns:
+        torch.nn.Module: The loaded YOLOv5 model.
+    """
     return torch.hub.load("ultralytics/yolov5", "yolov5s", pretrained=True)
 
 
 def detect_pedestrians(model, image):
+    """
+    Detects pedestrians in an image using a given model.
+
+    Args:
+        model: The object detection model.
+        image: The input image.
+
+    Returns:
+        A list of detected pedestrians, where each pedestrian is represented as a tuple
+        containing the bounding box coordinates (x1, y1, x2, y2) and the confidence score.
+    """
     results = model(image)
     pedestrians = results.pred[0]
 
@@ -56,6 +92,16 @@ def detect_pedestrians(model, image):
 
 
 def process_frames(model, frame_list):
+    """
+    Process a list of frames using a given model.
+
+    Args:
+        model: The model used for detecting pedestrians.
+        frame_list: A list of frames to process.
+
+    Returns:
+        None
+    """
     with open("../Data/det_yolo.txt", "w") as file:
         # file.write("frame,id,bb_left,bb_top,bb_width,bb_height,conf,x,y,z\n")
 

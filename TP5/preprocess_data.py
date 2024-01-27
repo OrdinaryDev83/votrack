@@ -3,6 +3,17 @@ import pandas as pd
 
 
 def preprocess_frames(df):
+    """
+    Preprocesses the given DataFrame containing frame data.
+
+    Args:
+        df (pandas.DataFrame): The DataFrame containing frame data.
+
+    Returns:
+        tuple: A tuple containing two elements:
+            - The preprocessed DataFrame.
+            - The original length of the "frame" column in the DataFrame.
+    """
     columns = [
         "frame",
         "id",
@@ -34,6 +45,16 @@ def preprocess_frames(df):
 
 
 def get_frames(df):
+    """
+    Extracts frames from a DataFrame and returns a dictionary of frames.
+
+    Args:
+        df (DataFrame): The input DataFrame containing the frames.
+
+    Returns:
+        dict: A dictionary where the keys are the frame numbers and the values are lists of frame data.
+
+    """
     frames = {}
     for frame in df["frame"].unique():
         current = []

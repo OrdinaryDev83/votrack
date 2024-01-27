@@ -17,3 +17,10 @@ The track outputs are in the `*.txt` files.
 TP4 :
 - `cd TP4`
 - `python3 main.py`
+Added Kalman filter to the previous TP.
+
+TP5 (final project) :
+- `cd TP5`
+- `python3 main.py`
+Put everything together, commented code, optimized execution.
+YOLOV detection, ResNet18 feature extraction, Hungarian algorithm, Kalman filter, track management, etc.

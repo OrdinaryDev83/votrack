@@ -1,4 +1,15 @@
 def save_tracking_results(gt_bboxes_for_each_frame, frames, output_filename):
+    """
+    Save the tracking results to a CSV file.
+
+    Args:
+        gt_bboxes_for_each_frame (dict): A dictionary containing ground truth bounding boxes for each frame.
+        frames (dict): A dictionary containing bounding box data for each frame.
+        output_filename (str): The name of the output CSV file.
+
+    Returns:
+        None
+    """
     with open(output_filename, "w") as file:
         for frame in sorted(gt_bboxes_for_each_frame.keys()):
             data = gt_bboxes_for_each_frame[frame]

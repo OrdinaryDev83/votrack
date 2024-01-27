@@ -10,6 +10,18 @@ from vision import load_yolo, process_frames
 
 
 def process_file(images, folder_name, file_name, save_name):
+    """
+    Process a file by performing detection, tracking, and saving the tracking results.
+
+    Args:
+        images (list): List of images for detection and tracking.
+        folder_name (str): Name of the folder containing the file.
+        file_name (str): Name of the file to be processed.
+        save_name (str): Name of the file to save the tracking results.
+
+    Returns:
+        None
+    """
     det = pd.read_csv("../Data/" + folder_name + "/" + file_name, sep=",", header=None)
 
     det_frames, og_len = preprocess_frames(det)
@@ -44,6 +56,15 @@ def process_file(images, folder_name, file_name, save_name):
 
 
 def generate_yolo_file(images):
+    """
+    Generates a YOLO file for the given images.
+
+    Args:
+        images (list): A list of images to process.
+
+    Returns:
+        None
+    """
     print("Loading yolo...")
     model_yolo = load_yolo()
 
