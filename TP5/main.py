@@ -78,9 +78,9 @@ def main():
 
     generate_yolo_file(images)
 
-    # process_file(images, "det", "det.txt", "det_output.txt")
+    process_file(images, "det", "det.txt", "det_output.txt")
     process_file(images, ".", "det_yolo.txt", "ADL-Rundle-6.txt")
-    # process_file(images, "gt", "gt.txt", "gt_output.txt")
+    process_file(images, "gt", "gt.txt", "gt_output.txt")
 
 
 if __name__ == "__main__":

@@ -1,4 +1,23 @@
 # Visual Object Tracking TP
+
+TP5 is the final project, you can still view the previous TPs in the corresponding folders if necessary.
+
+---
+
+Requirements :
+- `pip3 install -r requirements.txt`
+
+---
+
+TP5 (final project) :
+- `cd TP5`
+- `python3 main.py`
+Put everything together, commented code, optimized execution.
+YOLOV detection, ResNet18 feature extraction, Hungarian algorithm, Kalman filter, track management, etc.
+A NVIDIA GPU, if present, will be used to speed up the process.
+
+---
+
 TP1 :
 - `cd TP1`
 - `python3 objTracking.py`
@@ -18,9 +37,3 @@ TP4 :
 - `cd TP4`
 - `python3 main.py`
 Added Kalman filter to the previous TP.
-
-TP5 (final project) :
-- `cd TP5`
-- `python3 main.py`
-Put everything together, commented code, optimized execution.
-YOLOV detection, ResNet18 feature extraction, Hungarian algorithm, Kalman filter, track management, etc.
