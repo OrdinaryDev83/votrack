@@ -5,11 +5,13 @@ import copy
 
 trajectory_motion_backtrack = 3
 
+
 def load_images(og_len):
     l = []
     for frame in tqdm(range(1, og_len + 1)):
         l.append(cv2.imread(f"../Data/img1/{frame:06d}.jpg"))
     return l
+
 
 def draw_frames(og_len, images_, bboxes_for_each_frame, frames):
     images = copy.deepcopy(images_)

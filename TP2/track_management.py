@@ -1,6 +1,7 @@
 import numpy as np
 import copy
 
+
 def track_management(tracks, jaccard_values):
     bboxes_for_each_frame = {}
     frame_indices = list(tracks.keys())
@@ -19,7 +20,7 @@ def track_management(tracks, jaccard_values):
                 "matches": [],
                 "unmatched_tracks": unmatched_tracks,
                 "unmatched_detections": [],
-                "jaccard_dict": []
+                "jaccard_dict": [],
             }
             frame_n_minus_1 = current_frame
             continue
@@ -59,7 +60,7 @@ def track_management(tracks, jaccard_values):
                 unmatched_detections.append(track)
                 ids[track] = new_track_id
                 new_track_id += 1
-        
+
         bboxes_for_each_frame[current_frame] = {
             "ids": copy.deepcopy(ids),
             "matches": matches,

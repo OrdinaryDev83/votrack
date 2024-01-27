@@ -6,7 +6,9 @@ def save_tracking_results(gt_bboxes_for_each_frame, frames, output_filename):
             bbox_data = frames[frame]
 
             for track_id in matched_tracks:
-                if track_id == -1 or track_id >= len(bbox_data):  # Skip unmatched tracks
+                if track_id == -1 or track_id >= len(
+                    bbox_data
+                ):  # Skip unmatched tracks
                     continue
 
                 bb_left, bb_top, bb_width, bb_height = bbox_data[track_id]

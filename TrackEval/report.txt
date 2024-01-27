@@ -1,0 +1,21 @@
+1 eval_sequence(ADL-Rundle-6, YoloV5Track)                               0.3091 sec
+    MotChallenge2DBox.get_raw_seq_data(YoloV5Track, ADL-Rundle-8)          0.1593 sec
+    MotChallenge2DBox.get_preprocessed_seq_data(pedestrian)                0.0681 sec
+    HOTA.eval_sequence()                                                   0.1627 sec
+    CLEAR.eval_sequence()                                                  0.0255 sec
+    Identity.eval_sequence()                                               0.0082 sec
+    Count.eval_sequence()                                                  0.0000 sec
+
+All sequences for YoloV5Track finished in 3.13 seconds
+
+HOTA: YoloV5Track-pedestrian       HOTA      DetA      AssA      DetRe     DetPr     AssRe     AssPr     LocA      OWTA      HOTA(0)   LocA(0)   HOTALocA(0)
+ADL-Rundle-6                       8.8685    18.234    4.7356    24.792    36.216    13.878    6.7095    74.626    10.422    14.036    56.169    7.8838        
+
+CLEAR: YoloV5Track-pedestrian      MOTA      MOTP      MODA      CLR_Re    CLR_Pr    MTR       PTR       MLR       sMOTA     CLR_TP    CLR_FN    CLR_FP    IDSW      MT        PT        ML        Frag      
+ADL-Rundle-6                       -21.781   74.21     -11.12    28.668    41.878    0         83.333    16.667    -29.174   1436      3573      1993      534       0         20        4         649        
+
+Identity: YoloV5Track-pedestrian   IDF1      IDR       IDP       IDTP      IDFN      IDFP      
+ADL-Rundle-6                       8.3669    7.0473    10.295    353       4656      3076       
+
+Count: YoloV5Track-pedestrian      Dets      GT_Dets   IDs       GT_IDs    
+ADL-Rundle-6                       3429      5009      13        24

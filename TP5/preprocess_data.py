@@ -22,7 +22,7 @@ def preprocess_frames(df):
     conf_threshold = 15.0
     if df["conf"].unique()[0] != 1:
         df = df[df.conf >= conf_threshold]
-    
+
     # remove bboxes with size <= 0 when rounded
     df = df[df.bb_left.round() > 0]
     df = df[df.bb_top.round() > 0]

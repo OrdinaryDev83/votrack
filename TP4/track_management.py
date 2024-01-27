@@ -37,7 +37,7 @@ def track_management(frames, tracks, jaccard_values):
                 matches.append(track)
             else:
                 unmatched_detections.append(track)
-        
+
         for old_matches in unmatched_tracks:
             if old_matches in kalman_filters:
                 del kalman_filters[old_matches]

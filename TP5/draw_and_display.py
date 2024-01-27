@@ -5,6 +5,7 @@ import copy
 
 trajectory_motion_backtrack = 3
 
+
 def load_images(og_len):
     l = []
     for frame in tqdm(range(1, og_len + 1)):
@@ -13,7 +14,8 @@ def load_images(og_len):
         l.append(i)
     return l
 
-def draw_frames(og_len, images_, ids, bboxes_for_each_frame, frames):
+
+def draw_frames(og_len, images_, bboxes_for_each_frame, frames):
     images = copy.deepcopy(images_)
     frame_ids = list(bboxes_for_each_frame.keys())
 
@@ -51,12 +53,11 @@ def draw_frames(og_len, images_, ids, bboxes_for_each_frame, frames):
             centroids[frame].append((bb[0] + bb[2] // 2, bb[1] + bb[3] // 2))
 
         draw_bboxes(img, bbox_matches, (255, 255, 255))
-        draw_ids(img, ids, bbox_matches, jaccard_values, matches, (255, 255, 255))
+        draw_ids(img, bbox_matches, jaccard_values, matches, (255, 255, 255))
 
         draw_bboxes(img, bbox_unmatched_detections, (0, 255, 0))
         draw_ids(
             img,
-            ids,
             bbox_unmatched_detections,
             jaccard_values,
             unmatched_detections,
@@ -64,7 +65,7 @@ def draw_frames(og_len, images_, ids, bboxes_for_each_frame, frames):
         )
 
         draw_bboxes(img, bbox_unmatched_tracks, (0, 0, 255))
-        draw_ids(img, ids, bbox_unmatched_tracks, None, unmatched_tracks, (0, 0, 255))
+        draw_ids(img, bbox_unmatched_tracks, None, unmatched_tracks, (0, 0, 255))
 
         if frame_index > frame_ids[trajectory_motion_backtrack]:
             previous_frame_index = frame_ids[frame_index - trajectory_motion_backtrack]
@@ -88,7 +89,7 @@ fps = 30
 def show_video(file_name, frame_imgs):
     for frame in frame_imgs:
         cv2.imshow("video", frame)
-        cv2.setWindowTitle('video', file_name)
+        cv2.setWindowTitle("video", file_name)
         if cv2.waitKey(1000 // fps) & 0xFF == ord("q"):
             break
     cv2.destroyAllWindows()
